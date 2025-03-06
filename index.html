@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crystal Roadmap</title>
+    <style>
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            margin: 20px;
+            background-color: #1e1e1e;
+            color: #f8f8f8;
+        }
+        .container {
+            max-width: 1000px;
+            margin: auto;
+            background: #2b2b2b;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #ffffff;
+        }
+        .roadmap-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 15px;
+        }
+        .category-column {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
+        .category-title {
+            font-weight: bold;
+            font-size: 1.2em;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+        .effort-card {
+            width: 100%;
+            padding: 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s, transform 0.2s;
+            background: #3a3a3a;
+            color: #ffffff;
+            text-align: center;
+            border: 1px solid #444;
+        }
+        .active {
+            background: #007acc;
+        }
+        .discussion {
+            background: #ff9800;
+        }
+        .effort-card:hover {
+            background: #555;
+            transform: scale(1.02);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Crystal Roadmap</h1>
+        <div class="roadmap-grid" id="roadmap"></div>
+    </div>
+
+    <script>
+        const efforts = [
+            { title: "Multithreading Improvements", category: "multithreading", status: "Active", type: "active" },
+            { title: "Event Loop Enhancements", category: "multithreading", status: "Under Discussion", type: "discussion" },
+            { title: "GC Tuning", category: "garbage-collection", status: "Active", type: "active" },
+            { title: "Memory Compaction", category: "garbage-collection", status: "Under Discussion", type: "discussion" },
+            { title: "Improved Error Messages", category: "developer-experience", status: "Active", type: "active" },
+            { title: "Better Debugging Tools", category: "developer-experience", status: "Under Discussion", type: "discussion" },
+            { title: "WebAssembly Support", category: "platform-support", status: "Active", type: "active" },
+            { title: "ARM64 Optimizations", category: "platform-support", status: "Under Discussion", type: "discussion" },
+            { title: "Community Outreach", category: "community", status: "Active", type: "active" },
+            { title: "New Contributor Mentorship", category: "community", status: "Under Discussion", type: "discussion" }
+        ];
+
+        const categories = [
+            { id: "multithreading", name: "Multithreading, Concurrency, Event Loop" },
+            { id: "garbage-collection", name: "Garbage Collection" },
+            { id: "developer-experience", name: "Developer Experience" },
+            { id: "platform-support", name: "Platform Support" },
+            { id: "community", name: "Community" }
+        ];
+
+        function renderRoadmap() {
+            const roadmap = document.getElementById("roadmap");
+            roadmap.innerHTML = "";
+            
+            categories.forEach(category => {
+                const column = document.createElement("div");
+                column.className = "category-column";
+                
+                const title = document.createElement("div");
+                title.className = "category-title";
+                title.innerText = category.name;
+                column.appendChild(title);
+                
+                efforts.filter(e => e.category === category.id).forEach(effort => {
+                    const card = document.createElement("div");
+                    card.className = `effort-card ${effort.type}`;
+                    card.innerHTML = `
+                        <h3>${effort.title}</h3>
+                        <p><strong>Status:</strong> ${effort.status}</p>
+                    `;
+                    column.appendChild(card);
+                });
+                
+                roadmap.appendChild(column);
+            });
+        }
+
+        renderRoadmap();
+    </script>
+</body>
+</html>
